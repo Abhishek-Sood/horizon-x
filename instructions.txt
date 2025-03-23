@@ -1,0 +1,19 @@
+Follow these Steps
+
+Open Command Line or Terminal in this folder.
+
+Ensure you have Python installed and then type the following - 
+
+python -m venv env
+
+This will create a virtual environment named "env". To activate this type -
+
+.\env\Scripts\activate
+
+Now install the dependencies 
+
+pip install -r requirements.txt
+
+Now you can run the app simply by typing - 
+
+python app.py
