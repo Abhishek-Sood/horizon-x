@@ -1,0 +1,288 @@
+{% extends 'base.html' %}
+
+{% block title %}AI Tutor - Register{% endblock %}
+
+{% block content %}
+<style>
+    :root {
+        --primary-accent: #6366f1;
+        --secondary-accent: #4f46e5;
+        --glass-bg: rgba(255, 255, 255, 0.1);
+        --deep-space: #0f172a;
+        --nav-bg: rgba(15, 23, 42, 0.95);
+    }
+
+    .registration-wrapper {
+        background: radial-gradient(circle at 50% 20%, #1e1b4b, var(--deep-space));
+        min-height: 100vh;
+        color: white;
+        font-family: 'Inter', sans-serif;
+        padding-top: 80px;
+    }
+
+    /* Navbar Styles */
+    .navbar {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background: var(--nav-bg);
+        backdrop-filter: blur(12px);
+        padding: 1rem 2rem;
+        z-index: 1000;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .navbar-brand {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: white;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+
+    .registration-container {
+        background: var(--glass-bg);
+        backdrop-filter: blur(12px);
+        border-radius: 1.5rem;
+        padding: 2.5rem;
+        max-width: 480px;
+        margin: 2rem auto;
+        animation: formEntrance 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    @keyframes formEntrance {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .form-title {
+        text-align: center;
+        font-size: 2rem;
+        margin-bottom: 2rem;
+        font-weight: 600;
+        background: linear-gradient(45deg, #fff, #a5b4fc);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        position: relative;
+    }
+
+    .form-title::after {
+        content: '';
+        position: absolute;
+        bottom: -1rem;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60px;
+        height: 3px;
+        background: linear-gradient(90deg, var(--primary-accent), var(--secondary-accent));
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+        position: relative;
+    }
+
+    .form-label {
+        display: block;
+        margin-bottom: 0.75rem;
+        font-weight: 500;
+        color: #e2e8f0;
+    }
+
+    .form-input {
+        width: 100%;
+        padding: 1rem 1.25rem;
+        border: 2px solid rgba(255, 255, 255, 0.1);
+        border-radius: 0.75rem;
+        background: rgba(255, 255, 255, 0.05);
+        color: white;
+        transition: all 0.3s ease;
+    }
+
+    .form-input:focus {
+        border-color: var(--primary-accent);
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+    }
+
+    .password-strength {
+        height: 3px;
+        background: rgba(255,255,255,0.1);
+        margin-top: 0.5rem;
+        border-radius: 2px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .strength-bar {
+        height: 100%;
+        width: 0;
+        background: var(--primary-accent);
+        transition: width 0.3s ease;
+    }
+
+    .tag {
+        background: linear-gradient(45deg, var(--primary-accent), var(--secondary-accent));
+        color: white;
+        padding: 0.375rem 1rem;
+        border-radius: 0.75rem;
+        font-size: 0.875rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin: 0.25rem;
+        animation: tagEntrance 0.3s ease-out;
+    }
+
+    .tag-remove {
+        background: none;
+        border: none;
+        color: inherit;
+        cursor: pointer;
+        padding: 0 0.25rem;
+    }
+
+    .submit-btn {
+        width: 100%;
+        padding: 1rem;
+        border: none;
+        border-radius: 0.75rem;
+        background: linear-gradient(45deg, var(--primary-accent), var(--secondary-accent));
+        color: white;
+        font-weight: 600;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .submit-btn:hover {
+        transform: translateY(-2px);
+    }
+
+    .submit-btn::after {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(45deg, 
+            transparent 20%, 
+            rgba(255,255,255,0.1) 50%, 
+            transparent 80%);
+        transform: rotate(45deg);
+        animation: btnShine 2s infinite;
+    }
+
+    @keyframes btnShine {
+        from { transform: translateX(-50%) rotate(45deg); }
+        to { transform: translateX(150%) rotate(45deg); }
+    }
+
+    @media (max-width: 768px) {
+        .registration-container {
+            margin: 1rem;
+            padding: 1.5rem;
+        }
+        
+        .navbar {
+            padding: 1rem;
+        }
+    }
+</style>
+
+<div class="registration-wrapper">
+
+
+    <div class="registration-container">
+        <h1 class="form-title">Create Account</h1>
+        
+        <form method="POST" action="{{ url_for('register') }}">
+            <div class="form-group">
+                <label class="form-label" for="username">Username</label>
+                <input type="text" class="form-input" id="username" name="username" required>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label" for="password">Password</label>
+                <input type="password" class="form-input" id="password" name="password" required>
+                <div class="password-strength">
+                    <div class="strength-bar" id="strength-bar"></div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label" for="confirm_password">Confirm Password</label>
+                <input type="password" class="form-input" id="confirm_password" name="confirm_password" required>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label" for="interests">Learning Interests</label>
+                <input type="text" class="form-input" id="interests" name="interests" 
+                    placeholder="Example: Machine Learning, Web Development, Data Science">
+                <div id="interest-tags"></div>
+            </div>
+            
+            <button type="submit" class="submit-btn">Create Account</button>
+        </form>
+    </div>
+
+
+
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // Tag management
+    const interestsInput = document.getElementById('interests');
+    const interestTags = document.getElementById('interest-tags');
+
+    interestsInput.addEventListener('input', function() {
+        const interests = this.value.split(',').map(item => item.trim()).filter(item => item);
+        interestTags.innerHTML = '';
+        
+        interests.forEach(interest => {
+            const tag = document.createElement('span');
+            tag.className = 'tag';
+            tag.innerHTML = `
+                ${interest}
+                <button class="tag-remove">&times;</button>
+            `;
+            
+            tag.querySelector('.tag-remove').addEventListener('click', () => {
+                tag.style.transform = 'scale(0)';
+                setTimeout(() => tag.remove(), 300);
+            });
+            
+            interestTags.appendChild(tag);
+        });
+    });
+
+    // Password strength
+    const passwordInput = document.getElementById('password');
+    const strengthBar = document.getElementById('strength-bar');
+    
+    passwordInput.addEventListener('input', function() {
+        const strength = Math.min(this.value.length / 12, 1);
+        strengthBar.style.width = `${strength * 100}%`;
+    });
+
+    // Password match validation
+    const confirmPassword = document.getElementById('confirm_password');
+    confirmPassword.addEventListener('input', function() {
+        if(this.value !== passwordInput.value) {
+            this.style.borderColor = '#ef4444';
+            this.style.boxShadow = '0 0 0 3px rgba(239, 68, 68, 0.2)';
+        } else {
+            this.style.borderColor = 'var(--primary-accent)';
+            this.style.boxShadow = '0 0 0 3px rgba(99, 102, 241, 0.2)';
+        }
+    });
+});
+</script>
+{% endblock %}
