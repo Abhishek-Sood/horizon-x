@@ -1,0 +1,513 @@
+{% extends 'base.html' %}
+
+{% block title %}AI Tutor - Quiz Results{% endblock %}
+
+{% block content %}
+<div class="results-container">
+    <!-- Score Summary -->
+    <div class="score-summary">
+        <div class="score-circle-container">
+            <div class="score-circle">
+                <svg class="progress-ring" width="160" height="160">
+                    <circle class="progress-ring-circle" stroke-width="8" fill="transparent" r="76" cx="80" cy="80"/>
+                    <circle class="progress-ring-progress" stroke-width="8" fill="transparent" r="76" cx="80" cy="80"/>
+                    <text class="score-percent" x="50%" y="50%" dy=".3em">{{ (score/total*100)|round|int }}%</text>
+                </svg>
+            </div>
+            <div class="score-label">Overall Score</div>
+        </div>
+        <div class="score-details">
+            <h1 class="topic-title">{{ topic }} Quiz Results</h1>
+            <p>Great job completing the quiz! Here's how you performed:</p>
+            <div class="score-stats">
+                <div class="stat-item correct">
+                    <div class="stat-icon">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <div class="stat-text">
+                        <div class="stat-value">{{ score }}</div>
+                        <div class="stat-label">Correct Answers</div>
+                    </div>
+                </div>
+                <div class="stat-item incorrect">
+                    <div class="stat-icon">
+                        <i class="fas fa-times"></i>
+                    </div>
+                    <div class="stat-text">
+                        <div class="stat-value">{{ total - score }}</div>
+                        <div class="stat-label">Incorrect Answers</div>
+                    </div>
+                </div>
+                <div class="stat-item time">
+                    <div class="stat-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-text">
+                        <div class="stat-value">{{ "%02d:%02d"|format(time_taken//60, time_taken%60) }}</div>
+                        <div class="stat-label">Time Taken</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Review Section -->
+    <div class="review-section">
+        <h2 class="section-title">Question Review</h2>
+        
+        {% for answer in answers %}
+        <div class="question-review">
+            <div class="question-header {% if answer.is_correct %}correct{% else %}incorrect{% endif %}">
+                <span class="question-number">Question {{ loop.index }}</span>
+                <span class="status-icon">
+                    {% if answer.is_correct %}
+                    <i class="fas fa-check"></i>
+                    {% else %}
+                    <i class="fas fa-times"></i>
+                    {% endif %}
+                </span>
+            </div>
+            <div class="question-content">
+                <h3 class="question-text">{{ answer.question }}</h3>
+                
+                <div class="options-grid">
+                    {% for option in answer.options %}
+                    <div class="option-result {% if loop.index0 == answer.correct_answer %}correct-answer{% endif %}
+                        {% if loop.index0 == answer.user_answer and not answer.is_correct %}user-incorrect{% endif %}">
+                        <div class="option-content">
+                            <span class="option-letter">{{ ['A', 'B', 'C', 'D'][loop.index0] }}</span>
+                            <span class="option-text">{{ option }}</span>
+                        </div>
+                        {% if loop.index0 == answer.correct_answer %}
+                        <span class="answer-label correct-label">Correct</span>
+                        {% endif %}
+                        {% if loop.index0 == answer.user_answer and not answer.is_correct %}
+                        <span class="answer-label incorrect-label">Your Answer</span>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="action-buttons">
+        <a href="{{ url_for('quiz', topic=topic) }}" class="btn primary">
+            <i class="fas fa-redo-alt"></i> Retake Quiz
+        </a>
+        <a href="{{ url_for('topic_selection') }}" class="btn secondary">
+            <i class="fas fa-book-open"></i> New Topic
+        </a>
+        <button class="btn tertiary" onclick="window.print()">
+            <i class="fas fa-download"></i> Download Report
+        </button>
+    </div>
+</div>
+
+<style>
+:root {
+    --primary-color: #3182CE;
+    --primary-light: #EBF8FF;
+    --secondary-color: #4A5568;
+    --correct-color: #38A169;
+    --correct-light: #F0FFF4;
+    --incorrect-color: #E53E3E;
+    --incorrect-light: #FFF5F5;
+    --text-primary: #2D3748;
+    --text-secondary: #718096;
+    --background: #FFFFFF;
+    --border-color: #E2E8F0;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.08);
+    --shadow-md: 0 4px 6px rgba(0,0,0,0.1), 0 2px 4px rgba(0,0,0,0.06);
+    --radius-sm: 0.375rem;
+    --radius-md: 0.75rem;
+    --radius-lg: 1rem;
+    --transition: all 0.2s ease;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    color: var(--text-primary);
+    background-color: #F7FAFC;
+    line-height: 1.6;
+}
+
+.results-container {
+    max-width: 900px;
+    margin: 3rem auto;
+    padding: 0 1.5rem;
+}
+
+/* Score Summary */
+.score-summary {
+    display: flex;
+    align-items: stretch;
+    gap: 2.5rem;
+    margin-bottom: 3rem;
+    background: var(--background);
+    padding: 0;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    overflow: hidden;
+}
+
+.score-circle-container {
+    padding: 2.5rem;
+    background: linear-gradient(135deg, var(--primary-color), #4299E1);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 240px;
+}
+
+.score-circle {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.progress-ring {
+    transform: rotate(0 deg);
+}
+
+.progress-ring-circle {
+    stroke: rgba(255, 255, 255, 0.3);
+    stroke-dasharray: 478;
+    stroke-linecap: round;
+}
+
+.progress-ring-progress {
+    stroke: white;
+    stroke-dasharray: 478;
+    stroke-dashoffset: calc(478 - (478 * {{ (score/total*100)|round|int }}) / 100);
+    stroke-linecap: round;
+    transition: stroke-dashoffset 1.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.score-percent {
+    font-size: 2.5rem;
+    font-weight: 700;
+    fill: white;
+    dominant-baseline: middle;
+    text-anchor: middle;
+}
+
+.score-label {
+    font-size: 1rem;
+    font-weight: 500;
+    text-align: center;
+    margin-top: -1rem;
+}
+
+.score-details {
+    flex: 1;
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.topic-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+}
+
+.score-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1.25rem;
+    margin-top: auto;
+}
+
+.stat-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.25rem;
+    border-radius: var(--radius-md);
+    background: white;
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition);
+}
+
+.stat-item:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.stat-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.stat-icon i {
+    font-size: 1.25rem;
+}
+
+.correct .stat-icon {
+    background: var(--correct-light);
+    color: var(--correct-color);
+}
+
+.incorrect .stat-icon {
+    background: var(--incorrect-light);
+    color: var(--incorrect-color);
+}
+
+.time .stat-icon {
+    background: var(--primary-light);
+    color: var(--primary-color);
+}
+
+.stat-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-value {
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.stat-label {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+/* Question Review */
+.section-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.section-title:after {
+    content: "";
+    height: 2px;
+    flex: 1;
+    background: linear-gradient(to right, var(--border-color), transparent);
+}
+
+.question-review {
+    margin-bottom: 2rem;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: var(--background);
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition);
+}
+
+.question-review:hover {
+    box-shadow: var(--shadow-md);
+}
+
+.question-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 1.5rem;
+    position: relative;
+}
+
+.question-header.correct {
+    background: var(--correct-light);
+}
+
+.question-header.incorrect {
+    background: var(--incorrect-light);
+}
+
+.question-header.correct:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: var(--correct-color);
+}
+
+.question-header.incorrect:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: var(--incorrect-color);
+}
+
+.question-number {
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.status-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.875rem;
+}
+
+.question-header.correct .status-icon {
+    background: var(--correct-color);
+    color: white;
+}
+
+.question-header.incorrect .status-icon {
+    background: var(--incorrect-color);
+    color: white;
+}
+
+.question-content {
+    padding: 1.5rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.question-text {
+    font-size: 1.125rem;
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+    color: var(--text-primary);
+}
+
+.options-grid {
+    display: grid;
+    gap: 1rem;
+}
+
+.option-result {
+    padding: 1rem 1.25rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    position: relative;
+    transition: var(--transition);
+}
+
+.option-result:hover {
+    background: #FAFAFA;
+}
+
+.option-content {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.option-letter {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #F7FAFC;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 0.875rem;
+    box-shadow: inset 0 0 0 1px var(--border-color);
+}
+
+.correct-answer {
+    border-color: var(--correct-color);
+    background: var(--correct-light);
+}
+
+.correct-answer .option-letter {
+    background: var(--correct-color);
+    color: white;
+    box-shadow: none;
+}
+
+.user-incorrect {
+    border-color: var(--incorrect-color);
+    background: var(--incorrect-light);
+}
+
+.user-incorrect .option-letter {
+    background: var(--incorrect-color);
+    color: white;
+    box-shadow: none;
+}
+
+.answer-label {
+    position: absolute;
+    top: -12px;
+    right: 16px;
+    padding: 0.25rem 0.75rem;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.correct-label {
+    background: var(--correct-color);
+    color: white;
+}
+
+.incorrect-label {
+    background: var(--incorrect-color);
+    color: white;
+}
+
+/* Action Buttons */
+.action-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 3rem;
+}
+
+.btn {
+    padding: 0.875rem 1.75rem;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-weight: 600;
+    transition: var(--transition);
+    text
+</style>
+
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+    AOS.init({
+        duration: 800,
+        once: true,
+        easing: 'ease-out-quad'
+    });
+    
+    // Animate progress ring
+    const circle = document.querySelector('.progress-ring-circle');
+    const radius = circle.r.baseVal.value;
+    const circumference = radius * 2 * Math.PI;
+    
+    circle.style.strokeDasharray = `${circumference} ${circumference}`;
+    circle.style.strokeDashoffset = circumference;
+    
+    const offset = circumference - ({{ (score/total*100)|round|int }} / 100 * circumference);
+    circle.style.strokeDashoffset = offset;
+</script>
+{% endblock %}

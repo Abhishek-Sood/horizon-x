@@ -1,0 +1,276 @@
+{% extends 'base.html' %}
+
+{% block title %}AI Tutor - Login{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="login-card">
+        <div class="mascot-container">
+            <img src="../static/hippo.png" alt="AI Tutor Mascot" class="mascot animated-float">
+        </div>
+
+        <form method="POST" action="{{ url_for('login') }}" class="auth-form">
+            <h1 class="auth-title">Welcome Back</h1>
+            <p class="auth-subtitle">Continue your learning journey</p>
+
+            <div class="form-group">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" id="username" name="username" required class="form-input">
+                <i class="form-icon fas fa-user"></i>
+            </div>
+
+            <div class="form-group">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" id="password" name="password" required class="form-input">
+                <i class="form-icon fas fa-lock"></i>
+                <button type="button" class="password-toggle">
+                    <i class="fas fa-eye"></i>
+                </button>
+            </div>
+
+            <button type="submit" class="auth-button">
+                <span>Sign In</span>
+                <div class="button-loader"></div>
+            </button>
+
+            <div class="auth-divider">
+                <span>or continue with</span>
+            </div>
+
+
+            <p class="auth-footer">
+                New here? 
+                <a href="{{ url_for('register') }}" class="auth-link">Create account</a>
+            </p>
+        </form>
+    </div>
+</div>
+
+<style>
+:root {
+    --primary-gradient: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+    --glass-bg: rgba(255, 255, 255, 0.1);
+    --dark-background: #0f172a;
+}
+
+.auth-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--dark-background);
+    padding: 2rem;
+}
+
+.login-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border-radius: 2rem;
+    display: flex;
+    max-width: 900px;
+    width: 100%;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    animation: cardEntrance 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.mascot-container {
+    flex: 1;
+    background: var(--primary-gradient);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem;
+}
+
+.mascot {
+    width: 100%;
+    max-width: 300px;
+    filter: drop-shadow(0 20px 30px rgba(0,0,0,0.3));
+    animation: float 6s ease-in-out infinite;
+}
+
+.auth-form {
+    flex: 1;
+    padding: 4rem;
+    position: relative;
+}
+
+.auth-title {
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(45deg, #fff, #a5b4fc);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.auth-subtitle {
+    color: #94a3b8;
+    margin-bottom: 2.5rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #e2e8f0;
+}
+
+.form-input {
+    width: 100%;
+    padding: 1rem 2.5rem;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0.75rem;
+    background: rgba(255, 255, 255, 0.05);
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.form-input:focus {
+    border-color: #6366f1;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+}
+
+.form-icon {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #94a3b8;
+}
+
+.password-toggle {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #94a3b8;
+    cursor: pointer;
+}
+
+.auth-button {
+    width: 100%;
+    padding: 1rem;
+    border: none;
+    border-radius: 0.75rem;
+    background: var(--primary-gradient);
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.auth-button:hover {
+    transform: translateY(-2px);
+}
+
+.auth-divider {
+    margin: 2rem 0;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: #94a3b8;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.social-auth {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+.social-button {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.social-button:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+}
+
+.auth-footer {
+    text-align: center;
+    color: #94a3b8;
+}
+
+.auth-link {
+    color: #6366f1;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.auth-link:hover {
+    color: #4f46e5;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+
+@keyframes cardEntrance {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 768px) {
+    .login-card {
+        flex-direction: column;
+    }
+    
+    .mascot-container {
+        padding: 2rem;
+    }
+    
+    .auth-form {
+        padding: 2rem;
+    }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // Password toggle
+    document.querySelector('.password-toggle').addEventListener('click', function() {
+        const passwordInput = document.getElementById('password');
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+        this.innerHTML = type === 'password' ? '<i class="fas fa-eye"></i>' : '<i class="fas fa-eye-slash"></i>';
+    });
+
+    // Form submission loader
+    document.querySelector('form').addEventListener('submit', function(e) {
+        const button = this.querySelector('.auth-button');
+        button.disabled = true;
+        button.querySelector('span').style.visibility = 'hidden';
+        button.querySelector('.button-loader').style.display = 'block';
+    });
+});
+</script>
+{% endblock %}

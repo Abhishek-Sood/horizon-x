@@ -1,0 +1,368 @@
+{% extends 'base.html' %}
+
+{% block title %}AI Tutor - Next-Gen Learning Platform{% endblock %}
+
+{% block content %}
+<!-- Loading Overlay -->
+<div class="loading-overlay">
+    <div class="loader"></div>
+</div>
+
+<!-- Hero Section -->
+<section class="hero is-fullheight has-gradient-background">
+    <div class="hero-body">
+        <div class="container">
+            <div class="columns is-vcentered">
+                <div class="column is-6" data-aos="fade-right">
+                    <div class="mascot-container">
+                        <img src="../static/hippo.png" alt="AI Tutor Mascot" 
+                             class="mascot animated-float">
+                        <div class="gradient-overlay"></div>
+                    </div>
+                </div>
+                
+                <div class="column is-5 is-offset-1" data-aos="fade-left">
+                    <h1 class="title is-1 has-text-weight-bold mb-5">
+                        Master New Skills with
+                        <span class="has-text-gradient">AI-Powered</span> Learning
+                    </h1>
+                    <p class="subtitle is-4 has-text-grey-lighter">
+                        Personalized learning paths • Instant feedback • 24/7 availability
+                    </p>
+                    <div class="cta-buttons mt-6">
+                        <a href="{{ url_for('topic_selection') }}" 
+                           class="button is-primary is-rounded is-elevated">
+                            <span>Start Learning</span>
+                            <span class="icon is-small ml-2">
+                                <i class="fas fa-arrow-right"></i>
+                            </span>
+                        </a>
+                        <a href="#features" class="button is-light is-rounded ml-3">
+                            Learn More
+                        </a>
+                    </div>
+                    <div class="trust-badges mt-5">
+                        <div class="badge-item">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>Secure Platform</span>
+                        </div>
+                        <div class="badge-item">
+                            <i class="fas fa-users"></i>
+                            <span>500K+ Learners</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="hero-curve"></div>
+</section>
+
+<!-- Features Section -->
+<section id="features" class="section features-section">
+    <div class="container">
+        <div class="section-header has-text-centered mb-6" data-aos="zoom-in">
+            <h2 class="title is-2 mb-3">Why Choose AI Tutor?</h2>
+            <p class="subtitle is-5 has-text-grey">Transform your learning experience with intelligent features</p>
+        </div>
+        
+        <div class="features-grid columns is-multiline">
+            <!-- Feature Cards -->
+            <div class="column is-3" data-aos="fade-up">
+                <div class="feature-card">
+                    <div class="card-icon has-gradient-bg">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3 class="title is-4 mt-4">Adaptive Learning</h3>
+                    <p class="has-text-grey">AI that adjusts content difficulty based on your understanding pace progress</p>
+                    <div class="wave-effect"></div>
+                </div>
+            </div>
+
+            <div class="column is-3" data-aos="fade-up">
+                <div class="feature-card">
+                    <div class="card-icon has-gradient-bg">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3 class="title is-4 mt-4">Gamified Experience</h3>
+                    <p class="has-text-grey">Engage with interactive challenges and earn rewards as you learn.</p>
+                    <div class="wave-effect"></div>
+                </div>
+            </div>
+
+            <div class="column is-3" data-aos="fade-up">
+                <div class="feature-card">
+                    <div class="card-icon has-gradient-bg">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3 class="title is-4 mt-4">Track your Progress</h3>
+                    <p class="has-text-grey">Monitor your learning journey and set new goals as you advance.</p>
+                    <div class="wave-effect"></div>
+                </div>
+            </div>
+
+            <div class="column is-3" data-aos="fade-up">
+                <div class="feature-card">
+                    <div class="card-icon has-gradient-bg">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3 class="title is-4 mt-4">Community interaction</h3>
+                    <p class="has-text-grey">Connect with peers and experts to share insights and support.</p>
+                    <div class="wave-effect"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- Video Section -->
+<section class="section has-background-light">
+    <div class="container">
+        <div class="columns is-vcentered">
+            <div class="column is-6" data-aos="fade-right">
+                <div class="video-card">
+                    <iframe class="video-embed" src="https://www.youtube.com/embed/TiIC0ur56MQ" 
+                        loading="lazy" allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+            <div class="column is-5 is-offset-1" data-aos="fade-left">
+                <h2 class="title is-2 mb-4">See It in Action</h2>
+                <p class="subtitle is-5 has-text-grey mb-5">
+                    Discover how our AI-powered platform creates personalized learning experiences
+                </p>
+                <ul class="demo-features">
+                    <li><i class="fas fa-check-circle has-text-primary"></i> Interactive lessons</li>
+                    <li><i class="fas fa-check-circle has-text-primary"></i> Smart progress tracking</li>
+                    <li><i class="fas fa-check-circle has-text-primary"></i> Knowledge retention quizzes</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer has-background-darker">
+    <div class="container">
+        <div class="columns is-multiline">
+            <div class="column is-4">
+                <h4 class="title is-5 has-text-light">AI Tutor</h4>
+                <p class="has-text-grey-light">Empowering learners through AI-driven education</p>
+                <div class="social-links mt-4">
+                    <a class="social-icon" href="#">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a class="social-icon" href="#">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a class="social-icon" href="#">
+                        <i class="fab fa-github"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Additional Footer Column (if needed) -->
+            <div class="column is-4">
+                <div class="newsletter-card">
+                    <h5 class="title is-6 has-text-light">Stay Updated</h5>
+                    <div class="field has-addons">
+                        <div class="control is-expanded">
+                            <input class="input is-rounded" 
+                                   type="email" 
+                                   placeholder="Enter your email">
+                        </div>
+                        <div class="control">
+                            <button class="button is-primary is-rounded">
+                                Subscribe
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom has-text-centered mt-6">
+            <div class="legal-links">
+                <a href="#">Privacy Policy</a> | 
+                <a href="#">Terms of Service</a> | 
+                <a href="#">Cookie Settings</a>
+            </div>
+            <p class="has-text-grey-light mt-3">&copy; 2025 AI Tutor. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+
+<!-- Custom Footer Debug CSS -->
+<style>
+    :root {
+        --primary-gradient: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+        --secondary-gradient: linear-gradient(45deg, #1e3c72 0%, #2a5298 100%);
+        --dark-background: #0f172a;
+    }
+
+    /* Loading Overlay */
+    .loading-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: var(--dark-background);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        transition: opacity 0.5s;
+    }
+
+    .loader {
+        width: 48px;
+        height: 48px;
+        border: 3px solid #FFF;
+        border-radius: 50%;
+        animation: rotation 1s linear infinite;
+        border-bottom-color: transparent;
+    }
+
+    @keyframes rotation {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    /* Hero Section */
+    .has-gradient-background {
+        background: var(--secondary-gradient);
+        color: white;
+    }
+
+    .mascot {
+        width: 100%;
+        filter: drop-shadow(0 20px 30px rgba(0,0,0,0.3));
+    }
+
+    .animated-float {
+        animation: float 4s ease-in-out infinite;
+    }
+
+    @keyframes float {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-20px); }
+    }
+
+    /* Feature Cards */
+    .feature-card {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 1.5rem;
+        padding: 2rem;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    }
+
+    .feature-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 45px rgba(0,0,0,0.1);
+    }
+
+    .card-icon {
+        width: 64px;
+        height: 64px;
+        border-radius: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.75rem;
+        color: white;
+    }
+
+    .has-gradient-bg {
+        background: var(--primary-gradient);
+    }
+
+    /* Video Section */
+    .video-card {
+        border-radius: 2rem;
+        overflow: hidden;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    }
+
+    .video-embed {
+        width: 100%;
+        height: 350px;
+        border: none;
+    }
+
+    /* Footer Debug CSS */
+    footer.footer {
+        padding: 3rem 1.5rem;
+        background: var(--dark-background);
+        color: #f8fafc;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    footer.footer .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    footer.footer .social-icon {
+        font-size: 1.5rem;
+        margin-right: 1rem;
+        color: #94a3b8;
+    }
+    footer.footer .social-icon:hover {
+        color: var(--primary-accent);
+    }
+    footer.footer .legal-links a {
+        color: #94a3b8;
+        text-decoration: none;
+        margin: 0 0.5rem;
+    }
+    footer.footer .legal-links a:hover {
+        color: var(--primary-accent);
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .video-embed {
+            height: 250px;
+        }
+        
+        .hero-body {
+            padding-top: 4rem;
+        }
+    }
+</style>
+
+<!-- Animation Library -->
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Remove loading overlay
+        setTimeout(() => {
+            document.querySelector('.loading-overlay').style.opacity = '0';
+            setTimeout(() => {
+                document.querySelector('.loading-overlay').remove();
+            }, 500);
+        }, 1000);
+
+        // Initialize animations
+        AOS.init({
+            duration: 800,
+            once: true,
+            easing: 'ease-out-quad'
+        });
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    });
+</script>
+{% endblock %}
