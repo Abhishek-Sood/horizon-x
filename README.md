@@ -1,1 +1,1 @@
-# HORIZONX
+# Hippo3 - AI Tutor
